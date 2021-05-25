@@ -1,6 +1,6 @@
-import axios from 'axios';
+import axios from "axios";
 
-const URL = "http://localhost:3000/api/todos"
+const URL = "http://localhost:3000/api/todos";
 
 export const changeDescription = (event) => ({
 	type: "DESCRIPTION_CHANGED",
@@ -8,17 +8,20 @@ export const changeDescription = (event) => ({
 });
 
 export const search = () => {
-	const req = axios.get(`${URL}?sort=-createdAt${search}`)
+	const req = axios.get(`${URL}?sort=-createdAt${search}`);
 	return {
-		type: 'TODO_SEARCHED',
-		payload: req
-	}
-}
+		type: "TODO_SEARCHED",
+		payload: req,
+	};
+};
 
 export const add = (description) => {
-	const req = axios.post(URL, {description})
-	return {
-		type: 'TODO_ADDED',
-		payload: req
-	}
-}
+	const req = axios.post(URL, { description });
+	return [
+		{
+			type: "TODO_ADDED",
+			payload: req,
+		},
+		search(),
+	];
+};
